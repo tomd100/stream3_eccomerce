@@ -21,11 +21,13 @@ from django.views import static
 
 from accounts.views import get_index
 from accounts import urls as accounts_urls
+from products import urls as products_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r"^$", get_index, name="get_index"),
     url(r"^accounts/", include(accounts_urls)),
+    url(r"^products/", include(products_urls)),
 ]
 
 

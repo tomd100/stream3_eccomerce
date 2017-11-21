@@ -3,11 +3,13 @@ from django.contrib import auth, messages
 from .forms import UserLoginForm, UserRegistrationForm
 from django.contrib.auth.decorators import login_required
 
+from products.views import all_products
+
 # Create your views here.
 #-------------------------------------------------------------------------------
 
 def get_index(request):
-    return render(request, "index.html");
+    return redirect(all_products)
     
 #-------------------------------------------------------------------------------
 

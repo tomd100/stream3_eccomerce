@@ -1,0 +1,27 @@
+
+{% extends "base.html" %}
+{% load bootstrap_tags %}
+
+{% block content %}
+
+<h2>Product List</h2>
+
+{% for product in products %}
+
+    <div class="row">
+        <hr>
+        <div class="col-md-2 col-sm-3 text-center">
+            
+            <a class="story-img" href="#">
+                <img src="{{ MEDIA_URL }}{{ product.image }}" style="width:100px; height: 100px; background-color: #12ABB2; color: #ffffff;">
+            </a>
+
+            <p>{{ product.name }}</p>
+            <p>{{ product.description }}</p>
+            <p>{{ product.price }}</p>
+        </div>
+    </div>
+    
+{% endfor %}
+
+{% endblock %}
