@@ -30,7 +30,7 @@ DEBUG = os.environ.get("DEBUG", True)
 # "stream3-ecommerce-tomd100.c9users.io",
 # ]
 
-ALLOWED_HOSTS= [os.eviron.get('C9_HOSTNAME'),"e-comm-app.herokuapp.com"]
+ALLOWED_HOSTS= [os.environ.get('C9_HOSTNAME'),"e-comm-app.herokuapp.com"]
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
