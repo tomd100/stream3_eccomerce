@@ -24,12 +24,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY=os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.eviron.get("DEBUG", True)
 
-ALLOWED_HOSTS = [
-"stream3-ecommerce-tomd100.c9users.io",
-]
+# ALLOWED_HOSTS = [
+# "stream3-ecommerce-tomd100.c9users.io",
+# ]
 
+ALLOWED_HOSTS= [os.eviron.get('C9_HOSTNAME'),"e-comm-app.herokuapp.com"]
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'products',
     'cart',
     'checkout',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -130,17 +132,37 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 
+AWS_S3_OBJECT_PARAMETERS ={
+    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'CacheControl': 'max-age=94608000'
+}
+
+AWS_ACCESS_KEY_ID=os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY=os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME=os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME=os.environ.get('AWS_S3_REGION_NAME')
+
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+STATICFILES_LOCATION='static'
+STATICFILES_STORAGE='custom_storages.StaticStorage'
 
-MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+MEDIAFILES_LOCATION = 'media'
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-STRIPE_PUBLISHABLE = os.getenv('STRIPE_PUBLISHABLE_KEY')
-STRIPE_SECRET = os.getenv('STRIPE_SECRET_KEY')
+STRIPE_PUBLISHABLE = os.environ.get('STRIPE_PUBLISHABLE_KEY')
+STRIPE_SECRET = os.environ.get('STRIPE_SECRET_KEY')
+
+
